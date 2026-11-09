@@ -15,7 +15,7 @@ RUNS, DEMOS = "outputs/agent_runs.jsonl", "outputs/agent_demo_runs.jsonl"
 for p in [RUNS, DEMOS, agent.LEDGER] + glob.glob("state/*.json"):     # start from a clean slate so reruns are reproducible
     if os.path.exists(p):
         os.remove(p)
-os.makedirs("state", exist_ok=True)
+os.makedirs("state", exist_ok=True); os.makedirs("outputs", exist_ok=True)
 
 
 def log(path, res, **extra):

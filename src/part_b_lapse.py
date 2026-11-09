@@ -1,5 +1,6 @@
 """Part B tasks 4-8: lapse label, leak-free features, tuned models, class-balance experiment, persistence, retention list."""
 import json
+import os
 
 import joblib
 import numpy as np
@@ -14,6 +15,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 pd.set_option("display.width", 160)
 CUTOFF, END = pd.Timestamp("2025-09-01"), pd.Timestamp("2025-10-01")
+os.makedirs("outputs", exist_ok=True)
 
 o = pd.read_csv("data/clean/orders.csv", parse_dates=["order_ts"])
 c = pd.read_csv("data/clean/customers.csv", parse_dates=["signup_date"])

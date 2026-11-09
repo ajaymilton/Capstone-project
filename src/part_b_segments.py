@@ -1,4 +1,6 @@
 """Part B tasks 1-3: RFM table, K-means selection, segment profile/naming, PCA, outputs/customer_segments.csv."""
+import os
+
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
@@ -8,6 +10,7 @@ from sklearn.preprocessing import StandardScaler
 
 pd.set_option("display.width", 160)
 SNAPSHOT = pd.Timestamp("2025-10-01 00:00:00")
+os.makedirs("outputs", exist_ok=True)
 FINAL_K = 4
 
 o = pd.read_csv("data/clean/orders.csv", parse_dates=["order_ts"])
