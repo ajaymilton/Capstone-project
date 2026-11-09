@@ -32,9 +32,9 @@ Tested on Python 3.12 (3.11+ is required). Windows users activate with `.venv\Sc
 1. `python -m venv .venv`
 2. `source .venv/bin/activate`
 3. `pip install -r requirements.txt`
-4. `python generate_data.py` (last line: `generated: customers=1200 products=40 orders_raw=13084 tickets=164`)
+4. `python generate_data.py` 
 5. `python src/part_a_clean.py`
-6. `python src/validate_part_a.py` (last line: `ALL CHECKPOINTS PASSED`)
+6. `python src/validate_part_a.py` 
 7. `python src/part_a_sql.py`
 8. `python src/part_b_segments.py`
 9. `python src/part_b_lapse.py`
@@ -159,9 +159,6 @@ Correlation matrix (completed orders):
 | discount_pct | −0.095 | 1.000 | −0.000 | −0.010 |
 | quantity | 0.087 | −0.000 | 1.000 | −0.013 |
 | delivery_minutes | −0.003 | −0.010 | −0.013 | 1.000 |
-
-**The four questions (137 words).** *What is the data about?* 11,110 completed orders from six cities, April to September 2025, mostly small grocery, dairy and snack baskets plus some electronics. *Distributions?* Order values are strongly right-skewed: the mean (269.91) is twice the median (135.00) and the skewness is 4.61. *Outliers?* 897 orders lie above the 645.30 fence and none below. 635 of them (71%) are Electronics, which make up only 9.2% of completed orders, so they look like genuine big purchases and I kept them. The real anomalies (duplicates, negative delivery times, text amounts) were handled in cleaning. *Relationships?* All correlations are weak. The largest in absolute value is order_amount with discount_pct (−0.095), just ahead of order_amount with quantity (+0.087); delivery time is almost unrelated to everything. A correlation this small explains under 1% of the variance and does not establish causation.
-
 ---
 
 ## Part B
@@ -362,12 +359,6 @@ TF (term frequency) measures how often a word appears in a chunk, IDF (inverse d
 |---|---|---|---|---|
 | 40 words, overlap 10 | 15 | 12 / 12 | 12 / 12 | 2 / 2 |
 | 40 words, overlap 0 | 13 | 12 / 12 | **10 / 12** | 2 / 2 |
-
-With overlap 0 two questions break:
-- *"What delivery time makes a completed order eligible for a full refund?"* The right document is retrieved, but the answer is "receives a full refund of the order amount." The condition "more than 45 minutes" is in the previous chunk, because the sentence is cut by the chunk boundary.
-- *"How soon is money returned when a payment fails but is deducted?"* The answer is cut after "returned automatically", and the "within 48 hours" part sits at the start of the next chunk.
-
-In both cases the answer sentence is split across a boundary, which the 10-word overlap prevents.
 
 ### Tools
 

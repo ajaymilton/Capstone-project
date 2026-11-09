@@ -1,16 +1,11 @@
-"""mock_llm.py -- deterministic, offline stand-in for a hosted LLM chat API (no key, no network, no cost).
-Interface mirrors a hosted chat API:  response = chat(messages, tools=None)
-    response.choices[0].message.content / .tool_calls ; response.choices[0].finish_reason ; response.usage
-Three behaviours are selected by a marker word in the FIRST (system) message:
-    "CLASSIFY"  -> support-ticket classifier       "POLICY ASSISTANT" -> grounded policy answerer
-    "AGENT"     -> refund agent that requests tools (ReAct style)"""
+
 import json, math, re
 from types import SimpleNamespace as NS
 
 class TransientLLMError(Exception):
     """Simulated temporary failure (timeout / server busy). Retrying the same call succeeds."""
 
-_state = {"calls": 0, "ok": 0}      # call counters that drive the simulated misbehaviour
+_state = {"calls": 0, "ok": 0}   
 
 def reset():
     """Restart the counters. Call once before each independent batch run."""
